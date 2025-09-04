@@ -6,6 +6,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import authRoutes from './routes/auth.js';
 import resumeRoutes from './routes/resume.js';
 import suggestionRoutes from './routes/suggestion.js';
+import atsRoutes from './routes/ats.js';
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/resume', resumeRoutes);
 app.use('/api/suggestion', suggestionRoutes);
+app.use('/api/ats', atsRoutes);
 
 const PORT = process.env.PORT || 5000;
 

@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
+import ATSScanner from '../components/ATSScanner';
 import ModernTemplate from '../components/templates/ModernTemplate';
 import ClassicTemplate from '../components/templates/ClassicTemplate';
 import CreativeTemplate from '../components/templates/CreativeTemplate';
@@ -96,6 +97,14 @@ export default function ResumePreviewPage() {
                             ← Dashboard
                         </Link>
                     </div>
+                </div>
+
+                {/* ATS Scanner */}
+                <div className="mb-8">
+                    <ATSScanner 
+                        resumeData={latest} 
+                        onScoreUpdate={(score) => console.log('ATS Score:', score)} 
+                    />
                 </div>
 
                 {/* Resume Preview */}

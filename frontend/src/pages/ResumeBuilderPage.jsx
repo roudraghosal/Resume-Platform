@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import FormField from '../components/FormField';
 import TemplateSelector from '../components/TemplateSelector';
+import ATSScanner from '../components/ATSScanner';
 import ModernTemplate from '../components/templates/ModernTemplate';
 import ClassicTemplate from '../components/templates/ClassicTemplate';
 import CreativeTemplate from '../components/templates/CreativeTemplate';
@@ -27,6 +28,7 @@ export default function ResumeBuilderPage() {
     const [skillInput, setSkillInput] = useState('');
     const [loading, setLoading] = useState(false);
     const [suggestedSkills, setSuggestedSkills] = useState([]);
+    const [atsScore, setAtsScore] = useState(null);
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
 
@@ -431,8 +433,28 @@ export default function ResumeBuilderPage() {
                             )}
 
                             {step === 5 && (
-                                <div>
-                                    <p className="text-gray-600 mb-6">Review your resume and save</p>
+                                <div className="space-y-6">
+                                    <p className="text-gray-600">Review your resume, check ATS compatibility, and save</p>
+                                    
+                                    {/* ATS Scanner */}
+                                    <ATSScanner 
+                                        resumeData={resumeData} 
+                                        onScoreUpdate={(score) => setAtsScore(score)} 
+                                    />
+                                    
+                                    {/* ATS Score Display */}
+                                    {atsScore && (
+                                        <div className="bg-white rounded-lg shadow p-4 text-center">
+                                            <div className="text-sm text-gray-600 mb-2">Current ATS Score</div>
+                                            <div className={`text-2xl font-bold ${
+                                                atsScore >= 80 ? 'text-green-600' : 
+                                                atsScore >= 60 ? 'text-yellow-600' : 'text-red-600'
+                                            }`}>
+                                                {atsScore}%
+                                            </div>
+                                        </div>
+                                    )}
+                                    
                                     <div className="flex gap-4">
                                         <button
                                             type="button"

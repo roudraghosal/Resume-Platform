@@ -10,10 +10,12 @@ A comprehensive full-stack web application for creating, managing, and exporting
 - **📊 Analytics Dashboard**: Track resume performance with visual analytics
 - **📄 PDF Export**: Generate and download professional PDF resumes
 - **💡 AI Suggestions**: Smart content suggestions for resume sections
+- **🤖 ATS Score Analyzer**: Check Applicant Tracking System compatibility
 - **🔄 Version Control**: Track multiple versions of your resumes
 - **⚡ Real-time Preview**: Live preview while building your resume
 - **🎯 Multi-step Builder**: Intuitive form with progress tracking
 - **📈 Performance Tracking**: Resume views, downloads, and analytics
+- **🎯 Job-Specific Analysis**: Optimize for specific job descriptions
 
 ## 🛠️ Tech Stack
 
@@ -116,6 +118,25 @@ Frontend runs on `http://localhost:5173`
 - Thin typography and spacious layout
 - Minimalist approach for maximum impact
 
+## 🤖 ATS (Applicant Tracking System) Features
+
+### ATS Score Analyzer
+- **Comprehensive Analysis**: Analyzes keyword matching, formatting, sections, and readability
+- **Job Description Integration**: Compare resume against specific job postings
+- **Real-time Scoring**: Get instant ATS compatibility scores (0-100%)
+- **Detailed Breakdown**: See scores for different criteria (keywords, formatting, sections, readability)
+
+### ATS Optimization Tools
+- **Keyword Recommendations**: Identify missing keywords from job descriptions
+- **Formatting Guidelines**: ATS-friendly formatting suggestions
+- **Section Analysis**: Ensure all essential sections are present
+- **Best Practices**: Built-in tips for ATS optimization
+
+### ATS Score Interpretation
+- **🟢 80-100%**: Excellent ATS compatibility - likely to pass most systems
+- **🟡 60-79%**: Good compatibility - minor improvements recommended
+- **🔴 0-59%**: Needs improvement - significant ATS optimization required
+
 ## Setup & Run Instructions
 
 ### Backend
@@ -161,6 +182,10 @@ Resume-Platform/
 - `PUT /api/resume/:id` - Update resume
 - `DELETE /api/resume/:id` - Delete resume
 - `GET /api/resume/:id/pdf` - Download resume as PDF
+
+### ATS Analysis
+- `POST /api/ats/analyze` - Analyze resume for ATS compatibility
+- `POST /api/ats/recommendations` - Get ATS optimization recommendations
 
 ### Suggestions
 - `POST /api/suggestion/skills` - Get skill suggestions
