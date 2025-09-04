@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: resume-platform-backend
+    env: node
+    plan: free
+    buildCommand: 'npm install'
+    startCommand: 'npm run start'
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+    autoDeploy: true
