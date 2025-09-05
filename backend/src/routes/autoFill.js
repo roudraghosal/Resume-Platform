@@ -1,11 +1,11 @@
 import express from 'express';
-import { 
-  extractResumeData, 
-  generateAutoFillData, 
-  saveJobApplication,
-  getUserApplications,
-  updateApplicationStatus,
-  deleteApplication
+import {
+    extractResumeData,
+    generateAutoFillData,
+    saveJobApplication,
+    getUserApplications,
+    updateApplicationStatus,
+    deleteApplication
 } from '../controllers/autoFillController.js';
 import { authenticateToken } from '../middleware/auth.js';
 

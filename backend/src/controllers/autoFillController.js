@@ -2,7 +2,7 @@
 export async function extractResumeData(req, res) {
     try {
         const { resumeData } = req.body;
-        
+
         if (!resumeData) {
             return res.status(400).json({ message: 'Resume data is required' });
         }
@@ -34,7 +34,7 @@ export async function extractResumeData(req, res) {
 export async function generateAutoFillData(req, res) {
     try {
         const { resumeData, jobData } = req.body;
-        
+
         if (!resumeData) {
             return res.status(400).json({ message: 'Resume data is required' });
         }
@@ -50,19 +50,19 @@ export async function generateAutoFillData(req, res) {
             linkedin: resumeData.personal?.linkedin || '',
             github: resumeData.personal?.github || '',
             portfolio: resumeData.personal?.portfolio || resumeData.personal?.website || '',
-            
+
             // Professional Information
             summary: generateProfessionalSummary(resumeData, jobData),
             experience: formatExperienceForApplication(resumeData.experience, jobData),
             education: formatEducationForApplication(resumeData.education),
             skills: formatSkillsForApplication(resumeData.skills, jobData),
-            
+
             // Application-specific fields
             coverLetter: generateCoverLetter(resumeData, jobData),
             whyThisCompany: generateWhyThisCompany(jobData),
             relevantExperience: extractRelevantExperience(resumeData.experience, jobData),
             achievements: extractAchievements(resumeData.experience),
-            
+
             // Additional fields
             expectedSalary: '',
             availableStartDate: generateAvailableStartDate(),
@@ -88,10 +88,10 @@ export async function generateAutoFillData(req, res) {
 export async function saveJobApplication(req, res) {
     try {
         const { jobData, autoFillData, applicationStatus } = req.body;
-        
+
         // Save job application to database (you can expand this based on your needs)
         const JobApplication = (await import('../models/JobApplication.js')).default;
-        
+
         const application = await JobApplication.create({
             user: req.user.id,
             company: jobData.company,
@@ -215,11 +215,11 @@ function extractProfessionalInfo(resumeData) {
 }
 
 function extractTechnicalInfo(resumeData) {
-    const technicalSkills = resumeData.skills?.filter(skill => 
+    const technicalSkills = resumeData.skills?.filter(skill =>
         ['javascript', 'python', 'java', 'react', 'node', 'sql', 'mongodb', 'aws']
-        .some(tech => skill.toLowerCase().includes(tech))
+            .some(tech => skill.toLowerCase().includes(tech))
     ) || [];
-    
+
     return {
         programmingLanguages: technicalSkills,
         frameworks: extractFrameworks(resumeData.skills),
@@ -243,37 +243,37 @@ function generateProfessionalSummary(resumeData, jobData) {
     const experience = resumeData.experience || [];
     const skills = resumeData.skills || [];
     const totalYears = calculateTotalExperience(experience);
-    
+
     let summary = '';
-    
+
     if (totalYears > 0) {
         summary += `Experienced professional with ${totalYears}+ years in `;
     } else {
         summary += `Motivated professional specializing in `;
     }
-    
+
     // Add relevant skills based on job
     if (jobData?.position) {
         summary += `${jobData.position.toLowerCase()} and related technologies. `;
     } else {
         summary += `software development and technology solutions. `;
     }
-    
+
     // Add key skills
     if (skills.length > 0) {
         const topSkills = skills.slice(0, 5).join(', ');
         summary += `Proficient in ${topSkills}. `;
     }
-    
+
     // Add a closing statement
     summary += `Passionate about delivering high-quality solutions and contributing to team success.`;
-    
+
     return summary;
 }
 
 function formatExperienceForApplication(experience, jobData) {
     if (!experience || experience.length === 0) return '';
-    
+
     return experience.map(exp => {
         let formatted = `${exp.role || 'Position'} at ${exp.company || 'Company'}`;
         if (exp.duration) formatted += ` (${exp.duration})`;
@@ -284,7 +284,7 @@ function formatExperienceForApplication(experience, jobData) {
 
 function formatEducationForApplication(education) {
     if (!education || education.length === 0) return '';
-    
+
     return education.map(edu => {
         let formatted = `${edu.degree || 'Degree'} from ${edu.school || 'Institution'}`;
         if (edu.duration) formatted += ` (${edu.duration})`;
@@ -294,24 +294,24 @@ function formatEducationForApplication(education) {
 
 function formatSkillsForApplication(skills, jobData) {
     if (!skills || skills.length === 0) return '';
-    
+
     // Prioritize skills relevant to the job
     let prioritizedSkills = [...skills];
-    
+
     if (jobData?.position) {
         const jobTitle = jobData.position.toLowerCase();
         prioritizedSkills.sort((a, b) => {
-            const aRelevant = a.toLowerCase().includes(jobTitle) || 
-                            jobTitle.includes(a.toLowerCase());
-            const bRelevant = b.toLowerCase().includes(jobTitle) || 
-                            jobTitle.includes(b.toLowerCase());
-            
+            const aRelevant = a.toLowerCase().includes(jobTitle) ||
+                jobTitle.includes(a.toLowerCase());
+            const bRelevant = b.toLowerCase().includes(jobTitle) ||
+                jobTitle.includes(b.toLowerCase());
+
             if (aRelevant && !bRelevant) return -1;
             if (!aRelevant && bRelevant) return 1;
             return 0;
         });
     }
-    
+
     return prioritizedSkills.join(', ');
 }
 
@@ -319,7 +319,7 @@ function generateCoverLetter(resumeData, jobData) {
     const companyName = jobData?.company || '[Company Name]';
     const position = jobData?.position || '[Position Title]';
     const name = resumeData.personal?.name || '[Your Name]';
-    
+
     return `Dear Hiring Manager,
 
 I am writing to express my strong interest in the ${position} position at ${companyName}. With my background in software development and proven track record of delivering high-quality solutions, I am excited about the opportunity to contribute to your team.
@@ -336,32 +336,32 @@ ${name}`;
 
 function generateWhyThisCompany(jobData) {
     const companyName = jobData?.company || '[Company Name]';
-    
+
     return `I am particularly interested in ${companyName} because of its innovative approach to technology and its reputation as an industry leader. The company's commitment to excellence and growth opportunities align perfectly with my career goals and values.`;
 }
 
 function extractRelevantExperience(experience, jobData) {
     if (!experience || experience.length === 0) return '';
-    
+
     // For now, return the most recent experience
     // This could be enhanced with keyword matching
     const mostRecent = experience[0];
     if (mostRecent) {
         return `${mostRecent.role} at ${mostRecent.company} - ${mostRecent.description || 'Relevant experience in the field'}`;
     }
-    
+
     return '';
 }
 
 function extractAchievements(experience) {
     if (!experience || experience.length === 0) return '';
-    
+
     const achievements = experience
         .filter(exp => exp.description)
         .map(exp => exp.description)
         .filter(desc => desc.includes('%') || desc.includes('increased') || desc.includes('improved'))
         .join('\n');
-    
+
     return achievements || 'Consistently delivered high-quality work and exceeded performance expectations.';
 }
 
@@ -378,21 +378,21 @@ function calculateTotalExperience(experience) {
 
 function extractFrameworks(skills) {
     const frameworks = ['react', 'angular', 'vue', 'express', 'django', 'flask', 'spring'];
-    return skills?.filter(skill => 
+    return skills?.filter(skill =>
         frameworks.some(framework => skill.toLowerCase().includes(framework))
     ) || [];
 }
 
 function extractDatabases(skills) {
     const databases = ['mongodb', 'mysql', 'postgresql', 'redis', 'sql'];
-    return skills?.filter(skill => 
+    return skills?.filter(skill =>
         databases.some(db => skill.toLowerCase().includes(db))
     ) || [];
 }
 
 function extractTools(skills) {
     const tools = ['git', 'docker', 'kubernetes', 'aws', 'jenkins', 'jira'];
-    return skills?.filter(skill => 
+    return skills?.filter(skill =>
         tools.some(tool => skill.toLowerCase().includes(tool))
     ) || [];
 }
