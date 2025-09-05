@@ -7,6 +7,7 @@ import authRoutes from './routes/auth.js';
 import resumeRoutes from './routes/resume.js';
 import suggestionRoutes from './routes/suggestion.js';
 import atsRoutes from './routes/ats.js';
+import autoFillRoutes from './routes/autoFill.js';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/resume', resumeRoutes);
 app.use('/api/suggestion', suggestionRoutes);
 app.use('/api/ats', atsRoutes);
+app.use('/api/autofill', autoFillRoutes);
 
 const PORT = process.env.PORT || 5000;
 

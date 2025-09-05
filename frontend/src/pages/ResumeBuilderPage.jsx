@@ -108,8 +108,8 @@ export default function ResumeBuilderPage() {
                             <div key={index} className="flex items-center">
                                 <div
                                     className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${index <= step
-                                            ? 'bg-blue-600 text-white'
-                                            : 'bg-gray-200 text-gray-600'
+                                        ? 'bg-blue-600 text-white'
+                                        : 'bg-gray-200 text-gray-600'
                                         }`}
                                 >
                                     {index + 1}
@@ -435,26 +435,25 @@ export default function ResumeBuilderPage() {
                             {step === 5 && (
                                 <div className="space-y-6">
                                     <p className="text-gray-600">Review your resume, check ATS compatibility, and save</p>
-                                    
+
                                     {/* ATS Scanner */}
-                                    <ATSScanner 
-                                        resumeData={resumeData} 
-                                        onScoreUpdate={(score) => setAtsScore(score)} 
+                                    <ATSScanner
+                                        resumeData={resumeData}
+                                        onScoreUpdate={(score) => setAtsScore(score)}
                                     />
-                                    
+
                                     {/* ATS Score Display */}
                                     {atsScore && (
                                         <div className="bg-white rounded-lg shadow p-4 text-center">
                                             <div className="text-sm text-gray-600 mb-2">Current ATS Score</div>
-                                            <div className={`text-2xl font-bold ${
-                                                atsScore >= 80 ? 'text-green-600' : 
-                                                atsScore >= 60 ? 'text-yellow-600' : 'text-red-600'
-                                            }`}>
+                                            <div className={`text-2xl font-bold ${atsScore >= 80 ? 'text-green-600' :
+                                                    atsScore >= 60 ? 'text-yellow-600' : 'text-red-600'
+                                                }`}>
                                                 {atsScore}%
                                             </div>
                                         </div>
                                     )}
-                                    
+
                                     <div className="flex gap-4">
                                         <button
                                             type="button"

@@ -5,6 +5,7 @@ import SignupPage from './pages/SignupPage';
 import DashboardPage from './pages/DashboardPage';
 import ResumeBuilderPage from './pages/ResumeBuilderPage';
 import ResumePreviewPage from './pages/ResumePreviewPage';
+import JobApplicationsPage from './pages/JobApplicationsPage';
 import ErrorBoundary from './components/ErrorBoundary';
 
 function ProtectedRoute({ children }) {
@@ -42,6 +43,10 @@ function App() {
                     <Route
                         path="/resume/:id/preview"
                         element={<ProtectedRoute><ResumePreviewPage /></ProtectedRoute>}
+                    />
+                    <Route
+                        path="/job-applications"
+                        element={<ProtectedRoute><JobApplicationsPage /></ProtectedRoute>}
                     />
                     <Route
                         path="*"

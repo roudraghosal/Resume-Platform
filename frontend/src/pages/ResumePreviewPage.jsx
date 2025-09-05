@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import ATSScanner from '../components/ATSScanner';
+import AutoFillJobForm from '../components/AutoFillJobForm';
 import ModernTemplate from '../components/templates/ModernTemplate';
 import ClassicTemplate from '../components/templates/ClassicTemplate';
 import CreativeTemplate from '../components/templates/CreativeTemplate';
@@ -20,6 +21,7 @@ export default function ResumePreviewPage() {
     const { id } = useParams();
     const [resume, setResume] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [showAutoFill, setShowAutoFill] = useState(false);
     const componentRef = useRef();
 
     useEffect(() => {
@@ -90,6 +92,12 @@ export default function ResumePreviewPage() {
                         >
                             📄 Download PDF
                         </button>
+                        <button
+                            onClick={() => setShowAutoFill(true)}
+                            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center gap-2"
+                        >
+                            🚀 Auto-Fill Jobs
+                        </button>
                         <Link
                             to="/dashboard"
                             className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center gap-2"
@@ -101,9 +109,9 @@ export default function ResumePreviewPage() {
 
                 {/* ATS Scanner */}
                 <div className="mb-8">
-                    <ATSScanner 
-                        resumeData={latest} 
-                        onScoreUpdate={(score) => console.log('ATS Score:', score)} 
+                    <ATSScanner
+                        resumeData={latest}
+                        onScoreUpdate={(score) => console.log('ATS Score:', score)}
                     />
                 </div>
 
@@ -169,6 +177,15 @@ export default function ResumePreviewPage() {
                             ))}
                         </div>
                     </div>
+                )}
+
+                {/* Auto-Fill Job Form Modal */}
+                {showAutoFill && (
+                    <AutoFillJobForm
+                        isOpen={showAutoFill}
+                        onClose={() => setShowAutoFill(false)}
+                        resumeData={resume}
+                    />
                 )}
             </div>
         </div>

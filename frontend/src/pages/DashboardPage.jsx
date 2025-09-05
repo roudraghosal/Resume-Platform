@@ -112,6 +112,12 @@ export default function DashboardPage() {
                             >
                                 Create Resume
                             </Link>
+                            <Link
+                                to="/job-applications"
+                                className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors font-medium"
+                            >
+                                Job Applications
+                            </Link>
                             <button
                                 onClick={() => localStorage.removeItem('token') || window.location.reload()}
                                 className="bg-gray-100 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-200 transition-colors font-medium"
